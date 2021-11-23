@@ -1,7 +1,9 @@
-import express from 'express'
-import mongoose from 'mongoose'
+import express from 'express';
+import mongoose from 'mongoose';
+import Cors from 'cors';
 
-import Cards from './models/dbCards.js'
+import Cards from './dbCards.js';
+
 
 
 
@@ -15,13 +17,14 @@ const connection_url = 'mongodb+srv://admin:aks456ash@cluster0.higuw.mongodb.net
 
 //Middlewares
 
-
+app.use(express.json());
+app.use(Cors());
 
 //DB config
 mongoose.connect(connection_url ,{
     useNewUrlParser : true,
-    useCreateIndex : true,
     useUnifiedTopology : true,
+    
 })
 
 //API Endpoints
@@ -33,9 +36,9 @@ app.post('/tinder/card' ,(req , res) =>{
 
     Cards.create(dbCard, (err ,data) =>{
         if(err){
-            res.status(500).send(err)
+            res.status(500).send(err);
         }else{
-            res.status(201).send(data)
+            res.status(201).send(data);
         }
     })
 });
@@ -44,9 +47,9 @@ app.post('/tinder/card' ,(req , res) =>{
 app.get('/tinder/card' ,(req , res) =>{
     Cards.find( (err ,data) =>{
         if(err){
-            res.status(500).send(err)
+            res.status(500).send(err);
         }else{
-            res.status(200).send(data)
+            res.status(200).send(data);
         }
     })
 
